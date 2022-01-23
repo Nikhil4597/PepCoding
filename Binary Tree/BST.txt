@@ -1,0 +1,8 @@
+ A Binary tree BST if and only 
+ 1. if(left.data < current.node.data)
+ 2. if(right.data > current.node.data)
+	if(condition 1 && condition 2 ==true)
+	{
+		that Binary tree will be BST.
+
+}
