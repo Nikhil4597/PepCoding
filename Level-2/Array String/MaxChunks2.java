@@ -4,9 +4,9 @@ public class MaxChunks2{
     {
         int n = arr.length;
         int  [] min = new int [n];
-        min[0] = arr[0];
+        min[n-1] = arr[n-1];
         int [] max = new int [n];
-        max[n-1] = arr[n-1];
+        max[0] = arr[0];
         for(int i =1;i<n;i++)
         {
             max[i] = Math.max(arr[i-1],arr[i]);
@@ -15,7 +15,7 @@ public class MaxChunks2{
         {
             min[i] = Math.min(arr[i],arr[i+1]);
         }
-        int chunks =0;
+        int chunks =1;
         for(int i =0;i<n;i++)
         {
             if(max[i]<min[i])

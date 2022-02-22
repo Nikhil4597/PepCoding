@@ -2,66 +2,70 @@ import java.util.*;
 public class NextGreaterElement{
     public static int nextGreaterElement(int n)
     {
-        int count =0;int temp = n;
+        int len = 0;
+        int temp = n;
         while(temp>0)
         {
-            count++;
             temp/=10;
+            len++;
         }
-
-       char [] str = new char [count];
-       for(int i=str.length-1;i>=0;i--)
-       {
-           int val =  n%10;
-           str[i] = (char)('0'+val);
-           n/=10; 
-       }
-         
-        int j = count-2;
-
-        while(j>0 && str[j]>str[j+1])
+       char  [] nums = new char [len];
+       int idx=len-1;
+ 
+        while(n>0)
         {
-            j--;
-            
+            nums[idx] = (char)('0'+(n%10));
+            n/=10;
+            idx--;
+        }   
+
+         idx = len-1;
+        
+        while(idx>0 && nums[idx-1]>nums[idx])
+        {
+            idx--;
         }
-        if(j==0)
+        if(idx ==0)
         {
             return -1;
         }
-        System.out.println("j "+j);
-        int   sidx= nextMax(str,j); //swaping idx
-        System.out.println("sidx "+sidx);
-        swap(str,sidx,j);
-        reverse(str,j+1);
-        
          
-        // swap(str,1,5);
-        for(char i: str)
+         // change with  the min place value
+        //  idx-1= first smaller
+        int j = nextMax(nums,idx-1); // j=1
+    
+        swap(nums,idx-1,j);
+         
+
+    
+        reverse(nums,idx);
+     
+       
+        int ans  = 0;
+       
+        for(int i = 0;i<len;i++)
         {
-            System.out.println("After"+" "+i);
+            ans*=10;
+            ans+=(nums[i]-'0');
+            
         }
-        return 0;
-        
+        return ans;
     }
+    
     public static int nextMax(char [] str ,int j)
     {
         char jchar  = str[j];
-        System.out.println("jchar "+jchar);
+       
         int idx =j;
-        for(int  i =j+1;i<str.length;i++)
+        for(int i=str.length-1; i>=0;i--)
         {
-            if(Character.compare(str[j],str[i])>0)
-            {
-                if(Character.compare(str[i],jchar)>0)
-                {
-                    jchar = str[i];
-                    idx = i;
-                            System.out.println("i "+i);
-
-                }
-            }
+             if(jchar<str[i])
+             {
+                 idx = i;
+                 break;
+             }
         }
-        System.out.println("idx "+idx);
+         
         return idx; 
     }
     public static void swap(char [] str ,int i ,int j)

@@ -2,72 +2,39 @@ import java.util.*;
 public class FirstMissingNum{
     public static int firstMissingPositive(int [] nums)
     {
-        int i =0;
-        int j = nums.length-1;
-        while(i<j)
-        {   
-            if(nums[i]>0 && nums[j]<0)
-            {
-                i++;
-                j--;
-            }
-        
-            else if(nums[i]>0)
-            {
-                i++;
-            }
-            else if(nums[j]<=0)
-            {
-                j--;
-            }
-            else{
-                 swap(nums,i,j);
-                    i++;
-                    j--;
-            }
-        }
-
-        // for(int k=0;k<nums.length;k++)
-        // {
-        //     System.out.println(nums[k]+" ");
-        // }
-
-        int ans = getAns(nums,j);
-
-        return ans;
-    }
-    public static  int getAns(int [] arr, int pvi)
-    {
-        System.out.println(pvi);
-        for(int i =0;i<pvi;i++)
+        int min = Integer.MIN_VALUE;
+        boolean one = false;
+        for( int  i=0;i<nums.length;i++)
         {
-            if(arr[i]>0 && arr[i] < pvi)
+            if(nums[i]<1 || nums[i]>nums.length)
             {
-                int idx =arr[i];
-                if(arr[idx-1]>0){
-                    arr[idx-1] = -arr[idx-1];
-                }
+                nums[i] = min;
+
+            }
+            else if(nums[i] ==1)
+            {
+                one = true;
             }
         }
-        int mv=1;
-        for(int i =0;i<pvi;i++)
+        if(one == false)
         {
-            if(arr[i]<0)
+            return 1;
+        }
+        for(int i =0;i<nums.length;i++)
+        {
+            if(nums[i] != min && nums[i]>0)
             {
-                mv++;
-            }
-            else{
-                return mv;
+                nums[nums[i]-1] = -nums[nums[i]-1];
             }
         }
-         
-        return pvi+1;
-    }
-    private  static  void  swap(int [] arr ,int i ,int j)
-    {
-        int val = arr[i];
-                arr[i] = arr[j];
-                arr[j] = val;
+        for(int i =0;i<nums.length;i++)
+        {
+            if(nums[i]>0)
+            {
+                return i+1;
+            }
+        }
+        return nums.length+1;
     }
     public static void main(String [] args)
     {
